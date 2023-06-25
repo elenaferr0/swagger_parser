@@ -92,6 +92,13 @@ class YamlConfig {
       _freezed = yamlConfig['freezed'] as bool?;
     }
 
+    if (yamlConfig.containsKey('include_from_json_in_enums')) {
+      if (yamlConfig['include_from_json_in_enums'] is! bool?) {
+        throw const ConfigException("Config parameter 'include_from_json_in_enums' must be bool.");
+      }
+      _includeFromJsonInEnums = yamlConfig['include_from_json_in_enums'] as bool?;
+    }
+
     if (yamlConfig.containsKey('replacement_rules')) {
       if (yamlConfig['replacement_rules'] is! YamlList) {
         throw const ConfigException(
@@ -129,6 +136,8 @@ class YamlConfig {
   bool? _rootInterface;
   bool? _squishClients;
   bool? _freezed;
+  bool? _includeFromJsonInEnums;
+
   final List<ReplacementRule> _replacementRules = [];
 
   String get outputDirectory => _outputDirectory!;
@@ -144,6 +153,8 @@ class YamlConfig {
   bool? get squishClients => _squishClients;
 
   bool? get freezed => _freezed;
+
+  bool? get includeFromJsonInEnums => _includeFromJsonInEnums;
 
   List<ReplacementRule> get replacementRules => _replacementRules;
 }

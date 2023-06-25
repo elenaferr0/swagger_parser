@@ -55,6 +55,10 @@ class Generator {
       _clientPostfix = yamlConfig.clientPostfix!;
     }
 
+    if (yamlConfig.includeFromJsonInEnums != null) {
+      _includeFromJsonInEnums = yamlConfig.includeFromJsonInEnums!;
+    }
+
     _replacementRules = yamlConfig.replacementRules;
   }
 
@@ -68,6 +72,7 @@ class Generator {
     bool rootInterface = true,
     bool squishClients = false,
     bool isYaml = false,
+    bool includeFromJsonInEnums = false,
   }) {
     _schemaContent = schemaContent;
     _programmingLanguage = language;
@@ -76,6 +81,7 @@ class Generator {
     _rootInterface = rootInterface;
     _squishClients = squishClients;
     _freezed = freezed;
+    _includeFromJsonInEnums = includeFromJsonInEnums;
     _isYaml = isYaml;
   }
 
@@ -102,6 +108,9 @@ class Generator {
 
   /// Squish Clients in one folder
   bool _squishClients = false;
+
+  /// Include fromJson in enum DTOs
+  bool _includeFromJsonInEnums = false;
 
   /// Is the schema format YAML
   bool _isYaml = false;
@@ -149,6 +158,7 @@ class Generator {
       clientPostfix: _clientPostfix,
       freezed: _freezed,
       squishClients: _squishClients,
+      includeFromJsonInEnums: _includeFromJsonInEnums,
     );
     final files = <GeneratedFile>[];
     for (final client in _restClients) {

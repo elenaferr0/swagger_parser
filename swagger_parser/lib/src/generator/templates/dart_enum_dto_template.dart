@@ -7,6 +7,7 @@ import '../models/universal_enum_class.dart';
 String dartEnumDtoTemplate(
   UniversalEnumClass enumClass, {
   bool freezed = false,
+  bool includeFromJsonInEnums = false,
 }) {
   final className = enumClass.name.toPascal;
   return '''
@@ -15,7 +16,16 @@ import '${freezed ? 'package:freezed_annotation/freezed_annotation.dart' : 'pack
 ${descriptionComment(enumClass.description)}@JsonEnum()
 enum $className {
 ${enumClass.items.map((e) => _jsonValue(enumClass.type, e)).join(',\n')};
+  ${includeFromJsonInEnums ? '''
 
+  factory $className.fromJson(String json) => _\$${className}EnumMap.keys.firstWhere(
+      (element) => _\$${className}EnumMap[element] == json,
+      orElse: () => throw ArgumentError(
+        'Enum $className does not contain value \$json',
+      ),
+  );
+  
+    ''' : ''}
   ${enumClass.type.toDartType()} toJson() => _\$${className}EnumMap[this]!;
 }
 
