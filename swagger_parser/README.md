@@ -56,6 +56,7 @@ swagger_parser:
   replacement_rules: # Optional. Set regex replacement rules for the names of the generated classes/enums. All rules are applied in order.
     - pattern: "[0-9]+"
       replacement: ""
+  include_from_json_in_enums: true # Optional. Whether to include fromJson method in enums.
 ```
 
 
